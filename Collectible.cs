@@ -2,41 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-Public class Collectible : Monobehaviour
+public class Collectible : Monobehaviour
 {
   void OnTriggerEnter(Collider other)
   {
   
       if(other.tag == "Player")
-        {
+      {
 
         str colName = this.Name;
 
         switch(colName)
           {
           case "HP":
-            Console.WriteLine("Heal 50 point of health";);
+            Console.WriteLine("Heal 50 point of health");
             break;
           case "SPD":
-            Console.WriteLine("Increased Speed";);
+            Console.WriteLine("Increased Speed");
             break;
           case "Pwr":
-            Console.WriteLine("atk pwr up for 10 seconds";);
+            Console.WriteLine("atk pwr up for 10 seconds");
             break;
           case "Exp":
-            Console.WriteLine("Exp point up";);
+            Console.WriteLine("Exp point up");
             break;
           case "Weapon":
-            Console.WriteLine("Select the Weapon want to upgrade";);
+            Console.WriteLine("Select the Weapon want to upgrade");
             break;
           case "Coin":
-            Console.WriteLine("Coin up";);
+            Console.WriteLine("Coin up");
             break;
           }
           
       Destroy(this.gameObject);
-    {
-  {
-{
+      }
+  }
+}
 
 
