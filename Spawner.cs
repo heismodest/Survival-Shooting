@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
 //웨이브형 게임
     public Wave[] waves;    //wave를 담을 배열 변수
     public Enemy[] enemy;     //적을 불러오기
+    public GameObject[] Collectibles;
 
     LivingEntity playerEntity;
     Transform playerT;
@@ -62,8 +63,12 @@ public class Spawner : MonoBehaviour
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
                 StartCoroutine("SpawnEnemy");   //SpawnEnemy());
+                
+                // collectibles 생성
+                StartCoroutine("createCollectibles");
 
             }
+
         }
         if (devMode)
         {
@@ -112,6 +117,18 @@ public class Spawner : MonoBehaviour
         // spawnedEnemy.SetCharacteristics(currentWave.moveSpeed, currentWave.hitsToKillPlayer, currentWave.enemyHealth, currentWave.skinColour);
         spawnedEnemy.SetCharacteristics(spawnedEnemy.enemySpeed, spawnedEnemy.enemyAtkPwr * currentWave.atkMultiplier, spawnedEnemy.startingHealth * currentWave.enemyHealth, new Color (Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1));
     }
+    IEnumerator createCollectibles()
+    {
+        
+        Transform spawnTile = map.GetRandomOpenTile ();
+
+        GameObject SpawnedCollectibles = Instantiate(Collectibles[Random.Range(0, Collectibles.Length)], spawnTile.position + Vector3.up * 1.5f, Quaternion.identity, this.transform) as GameObject;
+        
+        yield return null; //new WaitForSeconds(10);
+    }
+
+
+
 
     void OnPlayerDeath()
     {
@@ -167,5 +184,11 @@ public class Spawner : MonoBehaviour
         // public Color skinColour;
 
     }
+    // [System.Serializable]
+    // public class Collectibles
+    // {
+    //     public float hpPoint;
+    //     public float hitPwr;
+    // }
 
 }

@@ -88,6 +88,51 @@ public class Player : LivingEntity //이미 LivingEntity가 MonoBehaviour와 IDm
         }
     }
 
+    void OnTriggerEnter(Collider collectibles)
+    {
+        
+        string colName = collectibles.name;
+        
+        switch(colName)
+          {
+          case "HP(Clone)":
+            Debug.Log("Heal 50 point of health");
+            
+            if(health + 50 >= startingHealth)
+            {
+                health = startingHealth;
+            }
+            else
+            {
+                health = health + 50;
+            }
+            
+            break;
+          case "SPD(Clone)":
+            Debug.Log("Increased Speed");
+            moveSpeed = moveSpeed + 5;
+            break;
+          case "Pwr":
+            Debug.Log("atk pwr up for 10 seconds");
+            break;
+          case "Exp":
+            Debug.Log("Exp point up");
+            break;
+          case "Weapon":
+            Debug.Log("Select the Weapon want to upgrade");
+            break;
+          case "Coin(Clone)":
+            Debug.Log("Coin up");
+            break;
+          }
+    }
+
+
+
+
+
+
+
     public override void Die()
     {
         AudioManager.instance.PlaySound("Player Death", transform.position);
