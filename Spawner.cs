@@ -21,6 +21,7 @@ public class Spawner : MonoBehaviour
     int enemiesRemainingToSpawn;
     int enemiesRemainingAlive;    //남은 적 수
     float nextSpawnTime;
+    float collectibleTimer = 5f;
 
     MapGenerator map;   //spawn 할 좌표를 가져오기 위해
 
@@ -63,11 +64,20 @@ public class Spawner : MonoBehaviour
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
                 StartCoroutine("SpawnEnemy");   //SpawnEnemy());
-                
-                // collectibles 생성
                 StartCoroutine("createCollectibles");
-
+                
             }
+
+            // collectibleTimer -= Time.deltaTime;
+
+            // if (collectibleTimer <= 0)
+            // {
+            //     // collectibles 생성
+            //     StartCoroutine("createCollectibles");
+
+            //     collectibleTimer = 2f;
+            // }
+
 
         }
         if (devMode)
@@ -122,13 +132,10 @@ public class Spawner : MonoBehaviour
         
         Transform spawnTile = map.GetRandomOpenTile ();
 
-        GameObject SpawnedCollectibles = Instantiate(Collectibles[Random.Range(0, Collectibles.Length)], spawnTile.position + Vector3.up * 1.5f, Quaternion.identity, this.transform) as GameObject;
+        GameObject CreatedCollectibles = Instantiate(Collectibles[Random.Range(0, Collectibles.Length)], spawnTile.position + Vector3.up * 1f, Quaternion.identity, this.transform) as GameObject;
         
         yield return null; //new WaitForSeconds(10);
     }
-
-
-
 
     void OnPlayerDeath()
     {

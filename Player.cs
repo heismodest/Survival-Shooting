@@ -16,6 +16,7 @@ public class Player : LivingEntity //이미 LivingEntity가 MonoBehaviour와 IDm
     Camera viewCamera;  //플레이어가 바라보는 지점을 가리켜줄 카메라변수
     PlayerController controller;
     GunController gunController;
+    Projectile bullet;
 
     protected override void Start()
     //LivingEntity 클래스를 상속받는 player, enemy에 있는 start메소드와 겹치면 실행이 안되기 때문에 override를 붙여줌.
@@ -110,18 +111,43 @@ public class Player : LivingEntity //이미 LivingEntity가 MonoBehaviour와 IDm
             break;
           case "SPD(Clone)":
             Debug.Log("Increased Speed");
-            moveSpeed = moveSpeed + 5;
+
+            if(moveSpeed + 1 >= 10)
+            {
+                moveSpeed = 10;
+            }
+            else
+            {
+                moveSpeed = moveSpeed + 4;
+            }
             break;
-          case "Pwr":
+
+          case "PWRUP(Clone)":
             Debug.Log("atk pwr up for 10 seconds");
+            if(bullet.damage + 1 >= 10)
+            {
+                bullet.damage = 10;
+            }
+            else
+            {
+                bullet.damage ++;
+            }
             break;
           case "Exp":
             Debug.Log("Exp point up");
             break;
-          case "Weapon":
+          case "GunSPD(Clone)":
             Debug.Log("Select the Weapon want to upgrade");
+            if(bullet.speed + 1 >= 10)
+            {
+                bullet.speed = 10;
+            }
+            else
+            {
+                bullet.speed ++;
+            }
             break;
-          case "Coin(Clone)":
+          case "Diamond(Clone)":
             Debug.Log("Coin up");
             break;
           }

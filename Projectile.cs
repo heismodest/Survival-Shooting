@@ -8,8 +8,8 @@ public class Projectile : MonoBehaviour
     public LayerMask collisionMask;     //Layer를 이용해서 충돌 체크하기 위한 변수
     public Color trailColour;
 
-    float speed = 10;
-    float damage = 1;
+    public float speed = 10;
+    public float damage = 1;
 
     float lifeTime = 3;
     float skinWidth = .1f;  //적이 오는 속도에 따른 거리(?)를 raycast가 이동하는 거리에 더해주기 위함
