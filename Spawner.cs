@@ -22,6 +22,7 @@ public class Spawner : MonoBehaviour
     int enemiesRemainingAlive;    //남은 적 수
     float nextSpawnTime;
     float collectibleTimer = 5f;
+    int numOfCollectiblesToBeCreated = 10;
 
     MapGenerator map;   //spawn 할 좌표를 가져오기 위해
 
@@ -46,6 +47,8 @@ public class Spawner : MonoBehaviour
 
         map = FindObjectOfType<MapGenerator> ();
         NextWave ();
+        //mapHolder(Generated Map)의 child count를 해서 current wave의 tile 수를 구한 후
+        //collectibles의 개수를 타일 수 대비 일정 비율로 제한
     }
 
     void Update()
@@ -64,19 +67,18 @@ public class Spawner : MonoBehaviour
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
                 StartCoroutine("SpawnEnemy");   //SpawnEnemy());
-                StartCoroutine("createCollectibles");
-                
+
             }
 
-            // collectibleTimer -= Time.deltaTime;
+            collectibleTimer -= Time.deltaTime;
 
-            // if (collectibleTimer <= 0)
-            // {
-            //     // collectibles 생성
-            //     StartCoroutine("createCollectibles");
+            if (collectibleTimer <= 0)
+            {
+                // collectibles 생성
+                StartCoroutine("CreateCollectibles");
 
-            //     collectibleTimer = 2f;
-            // }
+                collectibleTimer = 5f;
+            }
 
 
         }
@@ -127,12 +129,12 @@ public class Spawner : MonoBehaviour
         // spawnedEnemy.SetCharacteristics(currentWave.moveSpeed, currentWave.hitsToKillPlayer, currentWave.enemyHealth, currentWave.skinColour);
         spawnedEnemy.SetCharacteristics(spawnedEnemy.enemySpeed, spawnedEnemy.enemyAtkPwr * currentWave.atkMultiplier, spawnedEnemy.startingHealth * currentWave.enemyHealth, new Color (Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1));
     }
-    IEnumerator createCollectibles()
+    IEnumerator CreateCollectibles()
     {
         
         Transform spawnTile = map.GetRandomOpenTile ();
 
-        GameObject CreatedCollectibles = Instantiate(Collectibles[Random.Range(0, Collectibles.Length)], spawnTile.position + Vector3.up * 1f, Quaternion.identity, this.transform) as GameObject;
+        GameObject CreatedCollectibles = Instantiate(Collectibles[Random.Range(0, Collectibles.Length)], spawnTile.position + Vector3.up, Quaternion.identity, this.transform) as GameObject;
         
         yield return null; //new WaitForSeconds(10);
     }
@@ -191,11 +193,5 @@ public class Spawner : MonoBehaviour
         // public Color skinColour;
 
     }
-    // [System.Serializable]
-    // public class Collectibles
-    // {
-    //     public float hpPoint;
-    //     public float hitPwr;
-    // }
 
 }

@@ -96,7 +96,7 @@ public class Player : LivingEntity //이미 LivingEntity가 MonoBehaviour와 IDm
         
         switch(colName)
           {
-          case "HP(Clone)":
+          case "HP(Clone)":    //prefab 내에 collider와 collectibles 스크립트가 붙어있는 transform의 이름 기준임
             Debug.Log("Heal 50 point of health");
             
             if(health + 50 >= startingHealth)
